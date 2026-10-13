@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>고입 길잡이</title>
+<meta name="description" content="2027학년도 제주 고입 일정과 학교별 전형을 한눈에 보는 학부모·학생용 안내">
+<meta property="og:title" content="고입 길잡이 · 2027학년도 제주">
+<meta property="og:description" content="고입 달력, 학교 찾기, 전형 안내, 모의 지원, 설명회 안내">
+<meta property="og:type" content="website">
+<script>
+  // ▼ 바깥 주소(GitHub 등)에 올릴 때만: 따옴표 안에 Apps Script 웹 앱 URL(…/exec로 끝나는 주소)을 넣어요.
+  window.GOIP_API = '';
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#16201D;--muted:#4F5B57;--line:#DDE3E0;--soft:#EDF0EE;--ground:#F4F6F5;--card:#FFFFFF;--teal:#0D6B63;--teal-soft:#E3F1EF;--teal-bg:#F3FAF9;--indigo:#34418F;--indigo-soft:#E7EAF7;--purple:#6B3FA0;--purple-soft:#EFE8F7;--orange:#9A4209;--orange-soft:#FDEBDD;--red:#B42318;--red-soft:#FDE8E6;--dark:#16201D;--dark2:#2A3633}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:'IBM Plex Sans KR',-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:15px;line-height:1.5}
+button,input,select{font-family:inherit;font-size:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--teal)}
+h1,h2,h3,p{margin:0}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.top{background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.top .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:8px 28px;padding-top:10px;padding-bottom:10px}
+.brand{display:flex;align-items:center;gap:10px;min-height:44px;border:0;background:none;padding:0;text-align:left}
+.brand .logo{width:34px;height:34px;border-radius:10px;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center}
+.brand b{font-size:18px}
+.brand small{font-size:13px;color:var(--muted)}
+.nav{display:flex;flex-wrap:wrap;gap:4px}
+.nav button{min-height:44px;padding:0 14px;border-radius:10px;border:0;background:none;font-size:15px;font-weight:500}
+.nav button[aria-current="page"]{background:var(--teal-soft);color:var(--teal);font-weight:700}
+.bottom{display:none}
+main{padding:28px 0 64px}
+.page{display:flex;flex-direction:column;gap:18px}
+.title h1{font-size:28px;font-weight:700;letter-spacing:-.02em}
+.title p{margin-top:6px;font-size:14px;color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px}
+.pad{padding:18px 20px}
+.row{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start}
+.grow{flex:999 1 600px;min-width:0}
+.side{flex:1 1 300px;min-width:0}
+.pick{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px}
+.pick label{display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:700;color:#34418F}
+.pick select,.fsel{min-height:44px;width:100%;border-radius:10px;border:1px solid #C9D2CE;padding:0 10px;font-size:15px;font-weight:600;background:#fff;color:var(--ink)}
+.pick .fixed{min-height:44px;display:flex;align-items:center;padding:0 12px;border-radius:10px;background:#E7EAF7;font-size:15px;font-weight:700;color:#34418F}
+.seg{display:inline-flex;gap:4px;background:#E6EBE9;border-radius:12px;padding:4px}
+.seg button{min-height:40px;padding:0 16px;border:0;border-radius:9px;background:transparent;color:var(--muted);font-size:14px;font-weight:600}
+.seg button[aria-pressed="true"]{background:#fff;color:var(--teal)}
+.chip{display:inline-block;font-size:12px;font-weight:700;border-radius:6px;padding:2px 8px}
+.pill{min-height:36px;padding:0 12px;border-radius:18px;border:1px solid #C9D2CE;background:#fff;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px}
+.pill[aria-pressed="true"].dark{background:var(--dark);color:#fff;border-color:var(--dark)}
+.dot{width:8px;height:8px;border-radius:4px;display:inline-block;flex-shrink:0}
+.btn{min-height:44px;padding:0 16px;border-radius:12px;border:0;background:var(--teal);color:#fff;font-weight:600;font-size:14px;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none}
+.btn.line{background:#fff;color:var(--teal);border:1px solid var(--teal)}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.strip{background:var(--dark);color:#fff;border-radius:16px;padding:14px 18px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px}
+.strip .it{display:flex;align-items:center;gap:8px;background:var(--dark2);border-radius:10px;padding:6px 12px;font-size:14px}
+.strip .hot{color:#FFD2B3;font-weight:600}
+.cal{overflow-x:auto}
+.cal-in{min-width:620px}
+.wk{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border-bottom:1px solid var(--soft)}
+.wk.head{background:#F7F9F8;border-bottom:1px solid var(--line)}
+.wk.head div{padding:10px 0;text-align:center;font-size:13px;font-weight:700;color:var(--muted)}
+.day{min-height:116px;padding:6px;border:0;border-right:1px solid var(--soft);background:#fff;text-align:left;display:flex;flex-direction:column;gap:3px;min-width:0}
+.day.blank{background:#F7F9F8}
+.day[aria-pressed="true"]{background:var(--teal-bg);box-shadow:inset 0 0 0 2px var(--teal)}
+.num{width:28px;height:28px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700}
+.num.today{background:var(--teal);color:#fff!important}
+.sun{color:#C0362C}.sat{color:#2F55A4}
+.ev{display:block;max-width:100%;border-radius:6px;padding:2px 6px;font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dots{display:none;gap:3px;height:6px}
+.dots i{width:6px;height:6px;border-radius:3px;display:block}
+.more{font-size:12px;font-weight:600;color:var(--muted);padding:0 4px}
+.evcard{border:1px solid var(--soft);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:6px}
+.list li{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:baseline;padding:14px 20px;border-bottom:1px solid var(--soft)}
+ul.plain,ol.plain{list-style:none;margin:0;padding:0}
+.bul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:5px;font-size:14px;line-height:1.6}
+.bul li.sub{list-style:none;margin-left:4px;color:var(--muted)}
+.bul li.sub::before{content:'· ';font-weight:700}
+.slist{max-height:980px;overflow-y:auto;display:flex;flex-direction:column;gap:14px;padding-right:4px}
+.sbtn{width:100%;min-height:44px;padding:8px 12px;border-radius:10px;border:1px solid var(--soft);background:#fff;text-align:left;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.sbtn[aria-pressed="true"]{background:var(--teal-soft);border-color:var(--teal)}
+.search{display:flex;align-items:center;gap:8px;border:1px solid #C9D2CE;border-radius:12px;padding:0 12px;min-height:46px;background:#fff}
+.search input{flex:1;min-width:0;border:0;outline:0;background:transparent;font-size:15px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.fact{background:#F7F9F8;border-radius:12px;padding:12px 14px}
+.fact b{display:block;margin-top:4px;font-size:18px}
+.box-sp{border:2px solid var(--teal);background:var(--teal-bg);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.dl{display:grid;grid-template-columns:64px 1fr;gap:8px 12px;margin:0;font-size:14px;line-height:1.55}
+.dl dt{font-weight:700}.dl dd{margin:0}
+.calc{background:#fff;border:1px solid #CFE3E0;border-radius:12px;padding:12px 14px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px 14px}
+.calc label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted)}
+.calc input{width:120px;min-height:40px;border:1px solid #C9D2CE;border-radius:10px;padding:0 10px;font-size:15px;color:var(--ink)}
+.res{min-height:40px;display:flex;align-items:center;padding:0 14px;border-radius:10px;font-size:14px;font-weight:700}
+.warnbox{background:var(--red-soft);border-radius:14px;padding:14px 16px}
+.notebox{background:var(--orange-soft);border-radius:18px;padding:18px 20px}
+.step{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--soft);align-items:center}
+.step .tag{font-size:12px;font-weight:700;white-space:nowrap}
+.method p{font-size:14px;line-height:1.6;padding-left:12px;border-left:3px solid var(--line)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th{text-align:left;background:#F7F9F8;padding:12px 16px;border-bottom:1px solid var(--line);font-weight:700;white-space:nowrap}
+td{padding:12px 16px;border-bottom:1px solid var(--soft);vertical-align:top}
+.scroll{overflow-x:auto}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.rule{padding:18px;display:flex;flex-direction:column;gap:8px}
+.bar{display:flex;height:44px;border-radius:10px;overflow:hidden;font-size:13px;font-weight:700;color:#fff}
+.bar div{display:flex;align-items:center;justify-content:center;border-left:2px solid #fff}
+.bar div:first-child{border-left:0}
+.opt{width:100%;min-height:52px;padding:10px 14px;border-radius:12px;border:2px solid var(--soft);background:#fff;text-align:left;display:flex;align-items:center;gap:12px}
+.opt[aria-pressed="true"]{border-color:var(--teal);background:var(--teal-bg)}
+.radio{width:18px;height:18px;flex-shrink:0;border-radius:9px;border:2px solid #B9C3BF;display:flex;align-items:center;justify-content:center}
+.opt[aria-pressed="true"] .radio{border-color:var(--teal)}
+.opt[aria-pressed="true"] .radio::after{content:"";width:8px;height:8px;border-radius:4px;background:var(--teal)}
+.choice{min-height:60px;padding:10px 14px;border-radius:12px;border:2px solid var(--soft);background:#fff;text-align:left;display:flex;flex-direction:column;gap:2px}
+.choice[aria-pressed="true"]{border-color:var(--teal);background:var(--teal-bg)}
+.choice.back[aria-pressed="true"]{border-color:var(--indigo);background:var(--indigo-soft)}
+.badge{width:28px;height:28px;border-radius:14px;color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.summary{background:var(--dark);color:#fff;border-radius:18px;padding:18px 20px;display:flex;flex-direction:column;gap:10px}
+.summary .t{background:var(--dark2);border-radius:10px;padding:6px 12px;font-size:13px}
+.summary select{min-height:44px;min-width:260px;border-radius:10px;border:0;padding:0 12px;font-size:15px;font-weight:600;color:var(--ink);background:#fff}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px;list-style:none;margin:0;padding:0}
+.flow span.s{border-radius:8px;padding:5px 10px;font-weight:700;background:var(--dark2)}
+.flow span.s.on{background:var(--teal)}
+.ok-ico,.no-ico{width:22px;height:22px;flex-shrink:0;border-radius:11px;display:flex;align-items:center;justify-content:center}
+.ok-ico{background:var(--teal-soft);color:var(--teal)}
+.no-ico{background:var(--red-soft);color:var(--red)}
+.path .p{display:flex;gap:14px;align-items:stretch}
+.path .w{width:132px;flex-shrink:0;font-size:13px;font-weight:700;padding:10px 0}
+.path .ln{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.path .ln i{width:12px;height:12px;border-radius:6px;margin-top:14px;display:block}
+.path .ln b{width:2px;flex:1;background:var(--line)}
+.path .c{padding:9px 0 12px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:14px;font-weight:600}
+.empty{padding:32px;text-align:center;color:var(--muted)}
+.loading{padding:80px 0;text-align:center;color:var(--muted)}
+.foot{margin-top:28px;font-size:12px;color:var(--muted);text-align:center;line-height:1.7}
+.sescards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+:focus-visible{outline:3px solid #2F55A4;outline-offset:2px}
+@media (max-width:720px){
+  .wrap{padding:0 16px}
+  .top .nav{display:none}
+  .bottom{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:6px 4px calc(8px + env(safe-area-inset-bottom));z-index:6}
+  .bottom button{min-height:52px;border:0;background:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:12px;font-weight:500;color:var(--muted)}
+  .bottom button[aria-current="page"]{color:var(--teal);font-weight:700}
+  main{padding:20px 0 96px}
+  .title h1{font-size:23px}
+  .cal-in{min-width:0}
+  .day{min-height:52px;padding:4px 0;align-items:center;border-right:0}
+  .day .ev,.day .more{display:none}
+  .dots{display:flex}
+  .wk{border-bottom:0}
+  .path .w{width:96px}
+  .summary select{min-width:0;width:100%}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <button type="button" class="brand" data-act="view" data-v="calendar">
+      <span class="logo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18"/><path d="M5 6h12l2 2.5L17 11H5z"/><path d="M19 14H7l-2 2.5L7 19h12z"/></svg></span>
+      <span><b id="appName">고입 길잡이</b> <small id="appSub"></small></span>
+    </button>
+    <nav class="nav" aria-label="주요 메뉴" id="topnav"></nav>
+  </div>
+</header>
+<main><div class="wrap" id="app"><p class="loading">고입 정보를 불러오는 중이에요…</p></div></main>
+<nav class="bottom" aria-label="주요 메뉴" id="bottomnav"></nav>
+
+<script>
+(function () {
+  'use strict';
+  var WD = ['일', '월', '화', '수', '목', '금', '토'];
+  var CAT = {
+    '전기 특목': { k: 'sp', fg: '#6B3FA0', bg: '#EFE8F7' },
+    '전기 특성화': { k: 'vo', fg: '#0D6B63', bg: '#E3F1EF' },
+    '후기': { k: 'back', fg: '#34418F', bg: '#E7EAF7' },
+    '내신': { k: 'grade', fg: '#9A4209', bg: '#FDEBDD' },
+    '기타': { k: 'etc', fg: '#4F5B57', bg: '#E9EDEB' },
+    '설명회': { k: 'ses', fg: '#A1286A', bg: '#FBE7F1' }
+  };
+  var CAT_ORDER = ['전기 특목', '전기 특성화', '후기', '내신', '기타', '설명회'];
+  var GROUP = {
+    '전기 특목': { phase: '전기', name: '특수목적학과', fg: '#6B3FA0', bg: '#EFE8F7', who: '학교장 선발 (학교별 전형)' },
+    '전기 특성화': { phase: '전기', name: '특성화고·일반고 직업계열학과', fg: '#0D6B63', bg: '#E3F1EF', who: '학교장 선발 (소질적성·일반전형)' },
+    '후기 평준화': { phase: '후기', name: '평준화 일반고 (제주시)', fg: '#34418F', bg: '#E7EAF7', who: '교육감 선발·추첨 배정' },
+    '후기 비평준화': { phase: '후기', name: '비평준화 일반고·자율형 공립고', fg: '#34418F', bg: '#E7EAF7', who: '학교장 선발 (내신 100%)' },
+    '후기 특목': { phase: '후기', name: '특수목적고 (외국어고)', fg: '#34418F', bg: '#E7EAF7', who: '자기주도학습전형' }
+  };
+  var GROUP_ORDER = ['전기 특목', '전기 특성화', '후기 평준화', '후기 비평준화', '후기 특목'];
+  var VIEWS = [
+    { v: 'calendar', label: '고입 달력', short: '달력', icon: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>' },
+    { v: 'schools', label: '학교 찾기', short: '학교', icon: '<path d="M3 21h18"/><path d="M5 21V10l7-5 7 5v11"/><path d="M10 21v-5h4v5"/>' },
+    { v: 'guide', label: '전형 안내', short: '전형', icon: '<path d="M12 3v18"/><path d="M5 6h12l2 2.5L17 11H5z"/><path d="M19 14H7l-2 2.5L7 19h12z"/>' },
+    { v: 'mock', label: '모의 지원', short: '모의 지원', icon: '<path d="M4 6h10"/><path d="M4 12h7"/><path d="M4 18h10"/><path d="m15 15 2.5 2.5L21 13"/>' },
+    { v: 'events', label: '설명회 안내', short: '설명회', icon: '<circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 5.5a3 3 0 0 1 0 5"/><path d="M18 14c2 .8 3 2.9 3 6"/>' }
+  ];
+
+  var D = null, TODAY = '', MONTHS = [];
+  var ST = { view: 'calendar', mi: 0, sel: '', off: {}, calView: 'cal', school: '', phase: 'all', q: '', ab: '2', ot: '4',
+    f: 'vosp', vs: '', r: 'fail', gen: 'yes', gs: '', gr: 'fail', b: 'eq', we: true, ek: 'all', et: 'up',
+    sex: '', ng: '', fd: '', ft: '일반전형', w0: '', w1: '', w2: '', w3: '', w4: '', w5: '', w6: '' };
+  var SLOTS = 7;
+
+  // ---------- 도우미 ----------
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function lines(s) { return String(s == null ? '' : s).split(/\r?\n/).map(function (x) { return x.trim(); }).filter(Boolean); }
+  function yes(v) { return String(v).trim().toUpperCase() === 'O'; }
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function dkey(v) {
+    if (!v) return '';
+    var m = String(v).match(/(\d{4})[-./](\d{1,2})[-./](\d{1,2})/);
+    return m ? m[1] + '-' + pad(+m[2]) + '-' + pad(+m[3]) : '';
+  }
+  function parse(s) { var p = s.split('-'); return { y: +p[0], m: +p[1], d: +p[2] }; }
+  function utc(s) { var p = parse(s); return Date.UTC(p.y, p.m - 1, p.d); }
+  function dow(s) { return new Date(utc(s)).getUTCDay(); }
+  function md(s) { var p = parse(s); return p.m + '.' + p.d + '(' + WD[dow(s)] + ')'; }
+  function period(e) { return e.e && e.e !== e.s ? md(e.s) + ' ~ ' + md(e.e) : md(e.s); }
+  function diff(a, b) { return Math.round((utc(b) - utc(a)) / 86400000); }
+  function covers(e, s) { return e.s <= s && s <= (e.e || e.s); }
+  function addDays(s, n) { var t = new Date(utc(s) + n * 86400000); return t.getUTCFullYear() + pad(t.getUTCMonth() + 1) + pad(t.getUTCDate()); }
+  function byDate(a, b) { return a.s < b.s ? -1 : a.s > b.s ? 1 : 0; }
+  function icon(path, size) { return '<svg width="' + (size || 18) + '" height="' + (size || 18) + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + path + '</svg>'; }
+  var CHEV = '<path d="m9 6 6 6-6 6"/>';
+  function chip(text, fg, bg) { return '<span class="chip" style="color:' + fg + ';background:' + bg + '">' + esc(text) + '</span>'; }
+  function gcal(e) {
+    var end = addDays(e.e || e.s, 1);
+    return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent('[고입] ' + e.title) +
+      '&dates=' + e.s.replace(/-/g, '') + '/' + end + '&details=' + encodeURIComponent((e.who ? '대상: ' + e.who + '\n' : '') + '고입 길잡이에서 추가한 일정');
+  }
+
+  // ---------- 데이터 정리 ----------
+  function init(raw) {
+    var set = raw.settings || {};
+    TODAY = dkey(raw.today) || dkey(set['오늘 날짜 고정']);
+    if (!TODAY) { var n = new Date(); TODAY = n.getFullYear() + '-' + pad(n.getMonth() + 1) + '-' + pad(n.getDate()); }
+    var events = (raw.events || []).map(function (r) {
+      return { s: dkey(r['시작일']), e: dkey(r['종료일']), cat: CAT[r['분류']] ? r['분류'] : '기타', kind: r['종류'] || '', short: r['짧은 제목'] || r['제목'], title: r['제목'] || r['짧은 제목'], who: r['대상'] || '' };
+    }).filter(function (e) { return e.s; });
+    var sessions = (raw.sessions || []).filter(function (r) { return yes(r['공개']) && dkey(r['날짜']); }).map(function (r) {
+      return { s: dkey(r['날짜']), start: String(r['시작 시간'] || ''), end: String(r['끝 시간'] || ''), host: r['주최'] || '', title: r['제목'] || '', place: r['장소'] || '', who: r['대상'] || '',
+        apply: r['신청 방법'] || '', need: yes(r['사전 신청']), sid: r['학교ID'] || '' };
+    });
+    sessions.forEach(function (x) { events.push({ s: x.s, e: '', cat: '설명회', kind: '설명회', short: x.title, title: x.title + (x.start ? ' (' + x.start + ')' : ''), who: x.who }); });
+    events.sort(byDate);
+    var schools = (raw.schools || []).filter(function (r) { return r['학교ID'] && GROUP[r['그룹']]; }).map(function (r) {
+      var lim = parseFloat(r['결석 기준(일)']);
+      return { id: String(r['학교ID']), name: r['학교명'], dept: r['학과'] || '', group: r['그룹'], type: r['유형'] || '', cap: r['모집 인원'], capnote: r['인원 설명'] || '',
+        doc: yes(r['요강 반영']), pending: yes(r['발표 전']), elig: lines(r['지원 자격']), method: lines(r['전형 방법']), limits: lines(r['지원 제한·주의']), notes: lines(r['유의사항']),
+        spCap: String(r['소질적성 인원'] || ''), genCap: String(r['일반전형 인원'] || ''), rec: r['소질적성 추천'] || '', att: r['소질적성 출결 조건'] || '',
+        limit: isNaN(lim) ? null : lim, strict: String(r['기준 방식']).trim() === '미만', ok: r['가능 예시'] || '', no: r['불가 예시'] || '', spExtra: r['소질적성 기타'] || '',
+        link: /^https?:\/\//i.test(String(r['공지사항 링크'] || '').trim()) ? String(r['공지사항 링크']).trim() : '',
+        social: lines(r['사회통합전형']) };
+    });
+    var steps = (raw.steps || []).map(function (r) {
+      return { sid: String(r['학교ID'] || ''), label: r['항목'] || '', s: dkey(r['시작일']), e: dkey(r['종료일']), text: r['날짜 대신 표시할 글'] || '' };
+    });
+    D = { events: events, sessions: sessions, schools: schools, steps: steps, summary: raw.summary || [], set: set };
+
+    var first = events.length ? events[0].s : TODAY, last = TODAY;
+    events.forEach(function (e) { var x = e.e || e.s; if (x > last) last = x; });
+    var a = parse(first), b = parse(last), y = a.y, m = a.m;
+    MONTHS = [];
+    while (y < b.y || (y === b.y && m <= b.m)) { MONTHS.push({ y: y, m: m }); m++; if (m > 12) { m = 1; y++; } }
+    var tp = parse(TODAY);
+    ST.mi = 0;
+    MONTHS.forEach(function (x, i) { if (x.y === tp.y && x.m === tp.m) ST.mi = i; });
+    ST.sel = TODAY;
+    var vo = schools.filter(function (s) { return s.group === '전기 특성화' && !s.pending; });
+    ST.school = (vo[0] || schools[0] || {}).id || '';
+    document.getElementById('appName').textContent = set['앱 이름'] || '고입 길잡이';
+    document.getElementById('appSub').textContent = (set['학년도'] ? set['학년도'] + '학년도 ' : '') + (set['지역'] || '');
+    render();
+  }
+
+  function school(id) { return D.schools.filter(function (s) { return s.id === id; })[0]; }
+  function stepsFor(s) {
+    var list = D.steps.filter(function (t) { return t.sid === s.id || t.sid === s.group; });
+    // 날짜 순으로 (날짜 없는 항목은 맨 뒤, 같은 날짜는 시트 순서 유지)
+    return list.map(function (t, i) { return [t, i]; }).sort(function (a, b) {
+      var x = a[0].s || '9999', y = b[0].s || '9999';
+      return x < y ? -1 : x > y ? 1 : a[1] - b[1];
+    }).map(function (p) { return p[0]; });
+  }
+  function stepView(t, color) {
+    if (!t.s) return { label: t.label, when: t.text || '-', tag: '', fg: '#4F5B57', dot: '#C9D2CE', state: 'none' };
+    var end = t.e || t.s;
+    var when = t.e && t.e !== t.s ? md(t.s) + ' ~ ' + md(t.e) : md(t.s);
+    if (end < TODAY) return { label: t.label, when: when, tag: '지남', fg: '#4F5B57', dot: '#C9D2CE', state: 'past' };
+    if (t.s <= TODAY) return { label: t.label, when: when, tag: end === TODAY ? '오늘 마감' : '진행 중', fg: '#9A4209', dot: '#9A4209', state: 'now' };
+    return { label: t.label, when: when, tag: 'D-' + diff(TODAY, t.s), fg: color, dot: color, state: 'future' };
+  }
+  function shortWhen(t) { return !t ? '' : (t.e && t.e !== t.s ? md(t.s) + '~' + md(t.e) : md(t.s)); }
+  function setList(key, def) {
+    var v = D.set[key];
+    return String(v == null || String(v).trim() === '' ? def : v).split(/[,，、\n]/).map(function (x) { return x.trim(); }).filter(Boolean);
+  }
+  // 성별에 따라 지원할 수 없는 학교를 뺀다. (여고 = 이름에 '여고'가 있거나 설정 '여학교', 남학교 = 설정 '남학교')
+  function sexOk(s) {
+    if (!ST.sex) return true;
+    var girls = s.name.indexOf('여고') >= 0 || setList('여학교', '').indexOf(s.name) >= 0;
+    var boys = setList('남학교', '오현고, 제주제일고, 대기고').indexOf(s.name) >= 0;
+    return ST.sex === 'm' ? !girls : !boys;
+  }
+  function fullName(s) { return s ? s.name + (s.dept ? ' ' + s.dept : '') : ''; }
+  function findEvent(word) { return D.events.filter(function (e) { return e.title.indexOf(word) >= 0; })[0]; }
+
+  // ---------- 화면: 고입 달력 ----------
+  function viewCalendar() {
+    var M = MONTHS[ST.mi];
+    var evs = D.events.filter(function (e) { return !ST.off[e.cat]; });
+    var first = new Date(Date.UTC(M.y, M.m - 1, 1)).getUTCDay();
+    var dim = new Date(Date.UTC(M.y, M.m, 0)).getUTCDate();
+    var cells = [], i;
+    for (i = 0; i < first; i++) cells.push(null);
+    for (i = 1; i <= dim; i++) cells.push(i);
+    while (cells.length % 7) cells.push(null);
+
+    var h = '<div class="page">';
+    h += '<div class="row" style="justify-content:space-between;align-items:flex-end;gap:12px"><div class="title"><h1>' + esc((D.set['학년도'] || '') + '학년도 고입 달력') + '</h1>' +
+      '<p>' + esc(D.set['기준 자료'] || '') + '</p></div>' +
+      '<div class="seg" role="group" aria-label="보기 방식">' +
+      ['cal:달력', 'list:목록'].map(function (x) { var p = x.split(':'); return '<button type="button" data-act="calView" data-v="' + p[0] + '" aria-pressed="' + (ST.calView === p[0]) + '">' + p[1] + '</button>'; }).join('') + '</div></div>';
+
+    var ongoing = evs.filter(function (e) { return covers(e, TODAY); });
+    h += '<section class="strip" aria-label="오늘 진행 중인 일정"><b>오늘 ' + md(TODAY) + '</b><span style="color:#C9D6D2">' + (ongoing.length ? '진행 중' : '오늘은 진행 중인 고입 일정이 없어요') + '</span>' +
+      ongoing.map(function (e) { var end = e.e || e.s; return '<span class="it"><span class="dot" style="background:' + CAT[e.cat].bg + '"></span><b>' + esc(e.title) + '</b><span class="hot">' + (end === TODAY ? '오늘 마감' : e.e ? '~' + md(end) : '오늘') + '</span></span>'; }).join('') + '</section>';
+
+    h += '<div class="row" style="justify-content:space-between;align-items:center;gap:12px"><div class="row" style="align-items:center;gap:6px">' +
+      '<button type="button" class="pill" data-act="mstep" data-v="-1" aria-label="이전 달" ' + (ST.mi === 0 ? 'disabled' : '') + '>' + icon('<path d="m15 6-6 6 6 6"/>') + '</button>' +
+      '<h2 style="font-size:20px;min-width:116px;text-align:center">' + M.y + '년 ' + M.m + '월</h2>' +
+      '<button type="button" class="pill" data-act="mstep" data-v="1" aria-label="다음 달" ' + (ST.mi === MONTHS.length - 1 ? 'disabled' : '') + '>' + icon(CHEV) + '</button>' +
+      '<span class="row" style="gap:4px;margin-left:8px" role="group" aria-label="달 선택">' + MONTHS.map(function (x, n) {
+        return '<button type="button" class="pill dark" data-act="mi" data-v="' + n + '" aria-pressed="' + (n === ST.mi) + '">' + (x.y !== MONTHS[0].y ? String(x.y).slice(2) + '년 ' : '') + x.m + '월</button>';
+      }).join('') + '</span></div>' +
+      '<div class="row" style="gap:6px" role="group" aria-label="일정 종류 켜고 끄기">' + CAT_ORDER.filter(function (c) { return c !== '설명회' || D.sessions.length; }).map(function (c) {
+        var on = !ST.off[c], k = CAT[c];
+        return '<button type="button" class="pill" data-act="off" data-v="' + c + '" aria-pressed="' + on + '" style="' + (on ? 'background:' + k.bg + ';color:' + k.fg + ';border-color:' + k.bg : 'color:#4F5B57') + '"><span class="dot" style="background:' + (on ? k.fg : '#B9C3BF') + '"></span>' + c + '</button>';
+      }).join('') + '</div></div>';
+
+    h += '<div class="row"><section class="card grow" style="overflow:hidden" aria-label="' + M.m + '월 일정">';
+    if (ST.calView === 'cal') {
+      h += '<div class="cal"><div class="cal-in"><div class="wk head">' + WD.map(function (w, j) { return '<div class="' + (j === 0 ? 'sun' : j === 6 ? 'sat' : '') + '">' + w + '</div>'; }).join('') + '</div>';
+      for (i = 0; i < cells.length; i += 7) {
+        h += '<div class="wk">';
+        cells.slice(i, i + 7).forEach(function (d, j) {
+          if (d === null) { h += '<div class="day blank" aria-hidden="true"></div>'; return; }
+          var k = M.y + '-' + pad(M.m) + '-' + pad(d);
+          var list = evs.filter(function (e) { return covers(e, k); });
+          var seen = {}, dots = [];
+          list.forEach(function (e) { if (!seen[e.cat] && dots.length < 3) { seen[e.cat] = 1; dots.push(CAT[e.cat].fg); } });
+          h += '<button type="button" class="day" data-act="sel" data-v="' + k + '" aria-pressed="' + (k === ST.sel) + '" aria-label="' + M.m + '월 ' + d + '일 ' + WD[j] + '요일, 일정 ' + list.length + '개">' +
+            '<span class="num ' + (k === TODAY ? 'today ' : '') + (j === 0 ? 'sun' : j === 6 ? 'sat' : '') + '">' + d + '</span>' +
+            list.slice(0, 3).map(function (e) { return '<span class="ev" style="background:' + CAT[e.cat].bg + ';color:' + CAT[e.cat].fg + '">' + esc(e.short) + '</span>'; }).join('') +
+            (list.length > 3 ? '<span class="more">+' + (list.length - 3) + '개 더</span>' : '') +
+            '<span class="dots" aria-hidden="true">' + dots.map(function (c) { return '<i style="background:' + c + '"></i>'; }).join('') + '</span></button>';
+        });
+        h += '</div>';
+      }
+      h += '</div></div>';
+    } else {
+      var ms = M.y + '-' + pad(M.m) + '-01', me = M.y + '-' + pad(M.m) + '-' + pad(dim);
+      var ml = evs.filter(function (e) { return e.s <= me && (e.e || e.s) >= ms; });
+      h += ml.length ? '<ol class="plain list">' + ml.map(function (e) {
+        return '<li><span style="width:150px;font-weight:700;font-size:14px">' + period(e) + '</span>' + chip(e.cat, CAT[e.cat].fg, CAT[e.cat].bg) +
+          '<span style="flex:1 1 260px;font-weight:600">' + esc(e.title) + '</span></li>';
+      }).join('') + '</ol>' : '<p class="empty">이 달에는 표시할 일정이 없어요.</p>';
+    }
+    h += '</section>';
+
+    var sp = parse(ST.sel);
+    var selEv = evs.filter(function (e) { return covers(e, ST.sel); });
+    h += '<aside class="side" style="display:flex;flex-direction:column;gap:14px"><section class="card pad" style="display:flex;flex-direction:column;gap:12px" aria-live="polite">' +
+      '<div class="row" style="align-items:center;gap:8px"><h2 style="font-size:18px">' + sp.m + '월 ' + sp.d + '일 (' + WD[dow(ST.sel)] + ')</h2>' + (ST.sel === TODAY ? chip('오늘', '#fff', '#0D6B63') : '') + '</div>' +
+      (selEv.length ? selEv.map(function (e) {
+        return '<div class="evcard"><div class="row" style="gap:6px">' + chip(e.cat, CAT[e.cat].fg, CAT[e.cat].bg) + (e.kind ? '<span class="chip" style="border:1px solid #DDE3E0">' + esc(e.kind) + '</span>' : '') + '</div>' +
+          '<p style="font-weight:600">' + esc(e.title) + '</p><p class="small muted">' + period(e) + '</p>' + (e.who ? '<p class="small">대상: ' + esc(e.who) + '</p>' : '') +
+          '<a class="small" href="' + gcal(e) + '" target="_blank" rel="noopener">내 구글 캘린더에 추가</a></div>';
+      }).join('') : '<p class="small muted">이 날은 고입 일정이 없어요.</p>') + '</section>';
+    var up = evs.filter(function (e) { return e.s > TODAY; }).slice(0, 5);
+    h += '<section class="card pad"><h2 style="font-size:16px;margin-bottom:6px">다가오는 일정</h2>' + (up.length ? up.map(function (e) {
+      return '<div class="step"><span style="width:52px;flex-shrink:0;font-size:13px;font-weight:700;color:#9A4209">D-' + diff(TODAY, e.s) + '</span><div><p class="small" style="font-weight:600">' + esc(e.title) + '</p><p class="muted" style="font-size:12px">' + period(e) + '</p></div></div>';
+    }).join('') : '<p class="small muted">남은 일정이 없어요.</p>') + '</section>' +
+      '<button type="button" class="btn" data-act="view" data-v="mock" style="min-height:52px">내 지원 경로 모의로 그려보기 ' + icon(CHEV) + '</button></aside></div></div>';
+    return h;
+  }
+
+  // ---------- 화면: 학교 찾기 ----------
+  function capOf(s) {
+    if (s.group === '후기 평준화') { var t = +D.set['평준화 전체 정원']; return { big: t ? t.toLocaleString('ko-KR') + '명' : '-', sub: s.capnote, short: '' }; }
+    if (s.pending || s.cap === '' || s.cap == null) return { big: '미정', sub: s.capnote, short: s.pending ? '발표 전' : '' };
+    return { big: s.cap + '명', sub: s.capnote, short: s.cap + '명' };
+  }
+  function attCalc(s) {
+    var a = Math.max(0, parseFloat(ST.ab) || 0), o = Math.max(0, parseFloat(ST.ot) || 0);
+    var total = a + o / 3, ok = s.strict ? total < s.limit : total <= s.limit;
+    return { text: '환산 ' + Math.round(total * 100) / 100 + '일 → ' + (ok ? '지원 가능' : '지원 불가'), ok: ok };
+  }
+  function viewSchools() {
+    var cur = school(ST.school) || D.schools[0];
+    var g = GROUP[cur.group], cap = capOf(cur);
+    var h = '<div class="page"><div class="title"><h1>학교 찾기</h1><p>학교를 고르면 모집 인원, 지원 자격, 전형 방법, 일정, 유의사항을 한 번에 볼 수 있어요.</p></div><div class="row">';
+    h += '<section class="card side" style="max-width:100%;padding:16px;display:flex;flex-direction:column;gap:12px" aria-label="학교 목록">' +
+      '<label class="small" for="q" style="font-weight:600;color:#4F5B57">학교 이름으로 찾기</label>' +
+      '<div class="search">' + icon('<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>') + '<input id="q" type="search" data-input="q" placeholder="예: 애월고" value="' + esc(ST.q) + '"></div>' +
+      '<div class="seg" role="group" aria-label="전기 후기 선택" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr))">' +
+      [['all', '전체'], ['전기', '전기'], ['후기', '후기']].map(function (p) { return '<button type="button" data-act="phase" data-v="' + p[0] + '" aria-pressed="' + (ST.phase === p[0]) + '">' + p[1] + '</button>'; }).join('') + '</div>' +
+      '<div class="slist">';
+    var any = false;
+    GROUP_ORDER.forEach(function (gk) {
+      var G = GROUP[gk];
+      if (ST.phase !== 'all' && G.phase !== ST.phase) return;
+      var items = D.schools.filter(function (s) { return s.group === gk && (!ST.q || (s.name + s.dept).indexOf(ST.q.trim()) >= 0); });
+      if (!items.length) return;
+      any = true;
+      h += '<div style="display:flex;flex-direction:column;gap:4px"><p class="small" style="font-weight:700;color:' + G.fg + '">' + G.phase + ' · ' + G.name + ' <span class="muted" style="font-weight:500">' + items.length + '곳</span></p>' +
+        items.map(function (s) {
+          var c = capOf(s), meta = [s.dept, c.short].filter(Boolean).join(' · ');
+          return '<button type="button" class="sbtn" data-act="school" data-v="' + esc(s.id) + '" aria-pressed="' + (s.id === cur.id) + '"><b style="font-weight:600">' + esc(s.name) + '</b><span class="muted" style="font-size:12px;white-space:nowrap">' + esc(meta) + '</span></button>';
+        }).join('') + '</div>';
+    });
+    if (!any) h += '<p class="small muted" style="text-align:center;padding:16px 0">찾는 학교가 없어요.</p>';
+    h += '</div></section>';
+
+    var steps = stepsFor(cur).map(function (t) { return stepView(t, g.fg); });
+    var next = steps.filter(function (t) { return t.state === 'now' || t.state === 'future'; })[0];
+    h += '<article class="grow" style="display:flex;flex-direction:column;gap:14px" aria-label="' + esc(cur.name) + ' 상세">' +
+      '<section class="card" style="padding:22px;display:flex;flex-direction:column;gap:14px"><div class="row" style="justify-content:space-between;gap:12px"><div style="display:flex;flex-direction:column;gap:8px">' +
+      '<div class="row" style="gap:6px;align-items:center">' + chip(g.phase, g.fg, g.bg) + '<span class="small muted">' + esc(g.name) + '</span>' +
+      (cur.doc ? '<span class="chip" style="border:1px solid #0D6B63;color:#0D6B63;font-weight:600">학교 요강 반영</span>' : '') +
+      (cur.pending ? chip('전형 계획 발표 전', '#9A4209', '#FDEBDD') : '') + '</div>' +
+      '<h2 style="font-size:26px;letter-spacing:-.02em">' + esc(cur.name) + ' <span class="muted" style="font-size:18px;font-weight:600">' + esc(cur.dept) + '</span></h2></div>' +
+      '<div class="row" style="gap:8px">' +
+      (cur.link ? '<a class="btn line" href="' + esc(cur.link) + '" target="_blank" rel="noopener">학교 입학 공지 보기 ' + icon('<path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/>', 16) + '</a>' : '') +
+      (!cur.pending ? '<button type="button" class="btn" data-act="mockFrom" data-v="' + esc(cur.id) + '">이 학교로 모의 지원 ' + icon(CHEV, 16) + '</button>' : '') + '</div></div>' +
+      '<div class="facts"><div class="fact"><span class="small muted">모집 인원</span><b>' + esc(cap.big) + '</b><span class="muted" style="font-size:12px">' + esc(cap.sub) + '</span></div>' +
+      '<div class="fact"><span class="small muted">다음 일정</span><b style="color:#9A4209">' + (next ? (next.state === 'now' ? '진행 중' : next.tag) : '-') + '</b><span class="muted" style="font-size:12px">' + esc(next ? next.label : '남은 일정이 없어요') + '</span></div>' +
+      '<div class="fact"><span class="small muted">선발 방식</span><b style="font-size:15px">' + esc(g.who) + '</b></div></div></section>';
+
+    h += '<section class="card pad" style="display:flex;flex-direction:column;gap:12px"><h3 style="font-size:16px">지원 자격</h3><ul class="bul">' + cur.elig.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>';
+    if (cur.rec || cur.att) {
+      h += '<div class="box-sp"><p style="font-weight:700;color:#0D6B63">소질적성전형 지원 조건</p><dl class="dl"><dt>추천</dt><dd>' + esc(cur.rec || '-') + '</dd>' +
+        '<dt>출결</dt><dd><b>' + esc(cur.att || '-') + '</b>' + (cur.limit ? '<br><span class="muted">미인정 지각·조퇴·결과 3회 = 미인정 결석 1일로 환산</span>' : '') + '</dd>' +
+        (cur.spExtra ? '<dt>그 밖에</dt><dd>' + esc(cur.spExtra) + '</dd>' : '') + '</dl>';
+      if (cur.ok || cur.no) h += '<div class="row" style="gap:8px">' + (cur.ok ? '<span class="chip" style="background:#E3F1EF;color:#0D6B63;font-size:13px;padding:4px 10px">' + esc(cur.ok) + '</span>' : '') + (cur.no ? '<span class="chip" style="background:#FDE8E6;color:#B42318;font-size:13px;padding:4px 10px">' + esc(cur.no) + '</span>' : '') + '</div>';
+      if (cur.limit) {
+        var r = attCalc(cur);
+        h += '<div class="calc"><p class="small" style="flex:1 1 100%;font-weight:700">출결 조건 확인해 보기</p>' +
+          '<label for="ab">미인정 결석 (일)<input id="ab" type="number" min="0" inputmode="numeric" data-input="ab" value="' + esc(ST.ab) + '"></label>' +
+          '<label for="ot">미인정 지각·조퇴·결과 합계 (회)<input id="ot" type="number" min="0" inputmode="numeric" data-input="ot" value="' + esc(ST.ot) + '"></label>' +
+          '<p class="res" role="status" id="calcres" style="background:' + (r.ok ? '#E3F1EF' : '#FDE8E6') + ';color:' + (r.ok ? '#0D6B63' : '#B42318') + '">' + r.text + '</p></div>';
+      }
+      h += '</div>';
+    }
+    if (cur.limits.length) h += '<div class="warnbox"><p class="small" style="font-weight:700;color:#B42318;margin-bottom:6px">지원 제한·주의</p><ul class="bul">' + cur.limits.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>';
+    h += '</section>';
+
+    h += '<div class="row" style="gap:14px"><section class="card pad side" style="flex:1 1 300px"><h3 style="font-size:16px;margin-bottom:8px">전형 일정</h3>' +
+      (steps.length ? steps.map(function (t) { return '<div class="step"><span class="dot" style="width:10px;height:10px;border-radius:5px;background:' + t.dot + '"></span><div style="flex:1;min-width:0"><p class="small" style="font-weight:600">' + esc(t.label) + '</p><p class="small muted">' + esc(t.when) + '</p></div><span class="tag" style="color:' + t.fg + '">' + t.tag + '</span></div>'; }).join('') : '<p class="small muted">등록된 일정이 없어요.</p>') + '</section>' +
+      '<section class="card pad method" style="flex:1 1 300px;display:flex;flex-direction:column;gap:10px"><h3 style="font-size:16px">전형 방법</h3>' + cur.method.map(function (x) { return '<p>' + esc(x) + '</p>'; }).join('') + '</section></div>';
+    if (cur.social.length) h += '<section class="card pad" style="display:flex;flex-direction:column;gap:10px;border-left:5px solid #34418F"><h3 style="font-size:16px">사회통합전형 <span class="muted" style="font-size:13px;font-weight:600">사회적 배려대상자</span></h3><ul class="bul">' +
+      cur.social.map(function (x) { var sub = /^[-·•]/.test(x); return '<li' + (sub ? ' class="sub"' : '') + '>' + esc(sub ? x.replace(/^[-·•]\s*/, '') : x) + '</li>'; }).join('') + '</ul></section>';
+    if (cur.notes.length) h += '<section class="notebox"><h3 style="font-size:16px;color:#9A4209;margin-bottom:8px">지원할 때 꼭 확인하세요</h3><ul class="bul">' + cur.notes.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></section>';
+    h += '</article></div></div>';
+    return h;
+  }
+
+  // ---------- 화면: 전형 안내 ----------
+  function names(gk) { return D.schools.filter(function (s) { return s.group === gk; }).map(function (s) { return s.name + (s.dept ? '(' + s.dept + ')' : ''); }).join(', '); }
+  function viewGuide() {
+    var h = '<div class="page"><div class="title"><h1>전형 안내</h1><p>' + esc(D.set['기준 자료'] || '') + '을 쉽게 정리했어요.</p></div>';
+    h += '<section style="display:flex;flex-direction:column;gap:12px"><h2 style="font-size:20px">전기 학교와 후기 학교</h2><div class="row" style="gap:14px">' +
+      '<div class="card pad" style="flex:1 1 340px;display:flex;flex-direction:column;gap:12px"><div class="row" style="gap:10px;align-items:center">' + chip('전기', '#fff', '#6B3FA0') + '<b>먼저 선발 · 학교장이 선발</b></div>' +
+      '<div><p class="small" style="font-weight:700;color:#6B3FA0">특수목적학과</p><p class="small">' + esc(names('전기 특목')) + '</p></div>' +
+      '<div><p class="small" style="font-weight:700;color:#0D6B63">특성화고 · 일반고 직업계열학과</p><p class="small">' + esc(names('전기 특성화')) + '</p></div></div>' +
+      '<div class="card pad" style="flex:1 1 340px;display:flex;flex-direction:column;gap:12px"><div class="row" style="gap:10px;align-items:center">' + chip('후기', '#fff', '#34418F') + '<b>나중에 선발</b></div>' +
+      '<div><p class="small" style="font-weight:700;color:#34418F">평준화 일반고 (제주시, 교육감 배정)</p><p class="small">' + esc(names('후기 평준화')) + '</p></div>' +
+      '<div><p class="small" style="font-weight:700;color:#34418F">비평준화 일반고 · 자율형 공립고 (학교장 선발)</p><p class="small">' + esc(names('후기 비평준화')) + '</p></div>' +
+      '<div><p class="small" style="font-weight:700;color:#34418F">특수목적고</p><p class="small">' + esc(names('후기 특목')) + '</p></div></div></div></section>';
+
+    var rules = [
+      ['전기 학교는 1곳만', '시·도 구분 없이 1곳만 지원해요. 단, 마이스터고나 특성화고 특별전형(소질적성전형)에 불합격하면 전기 학교에 다시 지원할 수 있어요.'],
+      ['전기 합격 = 후기 지원 불가', '전기 학교에 합격하면 등록 여부와 관계없이 후기 학교에 지원할 수 없어요.'],
+      ['후기 학교도 1곳만', '단, 제주외고나 제주 학생이 지원할 수 있는 전국단위 자사고·국제고에 지원하면 제주시 평준화 일반고에 2지망부터 동시에 지원할 수 있어요.'],
+      ['이중지원은 합격 취소', '합격한 뒤 또는 불합격이 확정되기 전에 다른 학교에 지원하면 합격이 취소돼요.'],
+      ['추가모집은 불합격 확정자만', '추가모집은 불합격이 확정된 학생이나 지원하지 않은 학생만 지원할 수 있어요.'],
+      ['부모님 재직 학교 제한', '평준화 일반고는 부모님이 근무하는 학교에 배정하지 않고, 학교장 전형 학교는 지원할 수 없어요. (전보 예정 등 예외 있음)']
+    ];
+    h += '<section style="display:flex;flex-direction:column;gap:12px"><h2 style="font-size:20px">꼭 지켜야 할 지원 원칙</h2><ol class="plain grid3">' + rules.map(function (r, i) {
+      return '<li class="card rule"><span class="small" style="font-weight:700;color:#9A4209">원칙 ' + (i + 1) + '</span><b style="font-size:16px">' + r[0] + '</b><p class="small muted" style="line-height:1.6">' + r[1] + '</p></li>';
+    }).join('') + '</ol></section>';
+
+    if (D.summary.length) {
+      h += '<section style="display:flex;flex-direction:column;gap:12px"><h2 style="font-size:20px">전형별 일정 한눈에 보기</h2><div class="card scroll"><table style="min-width:880px"><thead><tr><th scope="col">구분</th><th scope="col">학교·전형</th><th scope="col">모집 인원</th><th scope="col">원서 접수</th><th scope="col">전형</th><th scope="col">합격 발표</th></tr></thead><tbody>' +
+        D.summary.map(function (r) { var c = CAT[r['분류']] || CAT['기타']; return '<tr><td>' + chip(r['분류'], c.fg, c.bg) + '</td><td style="font-weight:600">' + esc(r['학교·전형']) + '</td><td style="font-weight:700;white-space:nowrap">' + esc(r['모집 인원']) + '</td><td>' + esc(r['원서 접수']) + '</td><td class="muted">' + esc(r['전형']) + '</td><td>' + esc(r['합격 발표']) + '</td></tr>'; }).join('') +
+        '</tbody></table></div></section>';
+    }
+
+    var vo = D.schools.filter(function (s) { return s.group === '전기 특성화'; });
+    h += '<section style="display:flex;flex-direction:column;gap:12px"><h2 style="font-size:20px">특성화고 소질적성전형 학교별 지원 조건</h2>' +
+      '<p class="small muted" style="line-height:1.6">출결 조건은 <b style="color:#16201D">미인정 지각·조퇴·결과 3회 = 미인정 결석 1일</b>로 환산해서 따져요. \'이하\'와 \'미만\'이 다르니 꼭 확인하세요. (예: 3일 이하는 3일까지 가능, 2일 미만은 2일부터 불가)</p>' +
+      '<div class="card scroll"><table style="min-width:860px"><thead><tr><th scope="col">학교</th><th scope="col">소질적성 인원</th><th scope="col">추천</th><th scope="col">미인정 결석 조건</th><th scope="col">평가 요소</th></tr></thead><tbody>' +
+      vo.map(function (s) {
+        var m = s.method.filter(function (x) { return x.indexOf('소질적성') === 0; })[0] || '-';
+        var att = s.pending ? '-' : (s.limit ? s.limit + '일 ' + (s.strict ? '미만' : '이하') : (s.att || '-'));
+        var col = s.limit ? (s.limit <= 2 ? ['#B42318', '#FDE8E6'] : s.limit <= 3 ? ['#9A4209', '#FDEBDD'] : ['#0D6B63', '#E3F1EF']) : ['#4F5B57', '#EDF0EE'];
+        return '<tr><td style="font-weight:600;white-space:nowrap">' + esc(s.name + (s.dept ? ' ' + s.dept : '')) + '</td><td style="white-space:nowrap">' + esc(s.pending ? '전형 발표 전' : s.spCap || '-') + '</td><td style="white-space:nowrap">' + esc(s.pending ? '-' : s.rec || '-') + '</td><td>' + chip(att, col[0], col[1]) + '</td><td class="muted">' + esc(s.pending ? '신설 학교, 전형 계획 발표 전' : m.replace(/^소질적성[^:]*:\s*/, '')) + '</td></tr>';
+      }).join('') + '</tbody></table></div><p class="small muted">소질적성전형은 한 학교에만 지원할 수 있고, 불합격하면 특성화고 일반전형에 다시 지원할 수 있어요.</p></section>';
+
+    h += '<section style="display:flex;flex-direction:column;gap:12px"><h2 style="font-size:20px">내신 성적은 이렇게 계산해요</h2><div class="card" style="padding:22px;display:flex;flex-direction:column;gap:18px">' +
+      '<div class="row" style="gap:8px 20px;align-items:baseline"><b style="font-size:28px">총 300점</b><span class="small muted">교과 240점(80%) + 비교과 60점(20%) · 1학년 교과 성적은 반영하지 않아요</span></div>' +
+      '<div class="bar" role="img" aria-label="반영 비율: 2학년 교과 32퍼센트, 3학년 교과 48퍼센트, 출결 6퍼센트, 봉사 6퍼센트, 자율·동아리·스포츠클럽·독서 각 2퍼센트"><div style="width:32%;background:#34418F">2학년 교과 32%</div><div style="width:48%;background:#0D6B63">3학년 교과 48%</div><div style="width:6%;background:#9A4209"></div><div style="width:6%;background:#B8520F"></div><div style="width:8%;background:#6B3FA0"></div></div>' +
+      '<div class="grid3" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr));font-size:14px">' +
+      [['#34418F', '2학년 교과', '96점 (학기별 48점)'], ['#0D6B63', '3학년 교과', '144점 (학기별 72점)'], ['#9A4209', '출결', '18점 (학년별 6점)'], ['#B8520F', '봉사활동', '18점 (학년별 6점)'], ['#6B3FA0', '자율·동아리·스포츠클럽·독서', '각 6점 (1~3학년 통합)']].map(function (x) {
+        return '<div class="row" style="gap:8px;flex-wrap:nowrap"><span style="width:12px;height:12px;margin-top:4px;border-radius:3px;background:' + x[0] + ';flex-shrink:0"></span><span><b>' + x[1] + '</b> ' + x[2] + '</span></div>';
+      }).join('') + '</div>';
+    var g1 = findEvent('2차 내신산출'), g2 = findEvent('2차 내신성적');
+    if (g1 || g2) h += '<div class="row" style="gap:10px"><span class="chip" style="background:#FDEBDD;color:#9A4209;font-size:14px;padding:8px 14px">' + (g1 ? '2차 내신 기준일 ' + md(g1.s) : '') + (g2 ? ' · 산출일 ' + md(g2.s) : '') + '</span></div>';
+    h += '</div></section>';
+
+    h += '<section style="display:flex;flex-direction:column;gap:12px"><h2 style="font-size:20px">평준화 일반고는 이렇게 배정해요</h2><div class="row" style="gap:14px">' +
+      '<div class="card pad" style="flex:1 1 360px"><ol class="bul" style="gap:10px"><li>제주시 평준화 일반고 중 <b>1지망~7지망</b>을 순서대로 써요.</li><li>내신 개인석차백분율로 남·여 구분 없이 총 정원만큼 합격자를 정해요.</li><li>합격자를 성적에 따라 <b>9개 등급</b>으로 나눠요.</li><li>등급마다 1지망 지원자가 배정 인원보다 많으면 전산 추첨, 적으면 1지망을 먼저 배정하고 남은 자리는 2~7지망 순으로 추첨해요.</li><li>체육·무용특기자와 특수교육대상자는 우선 배정해요.</li></ol></div>' +
+      '<div class="card scroll" style="flex:1 1 300px"><table style="text-align:center"><caption style="padding:12px 16px 4px;text-align:left;font-weight:700">등급별 배정 비율</caption><thead><tr><th scope="col" style="text-align:center">등급</th><th scope="col" style="text-align:center">석차백분율</th><th scope="col" style="text-align:center">비율</th></tr></thead><tbody>' +
+      [['1', '4% 이하', '4%'], ['2', '4~11%', '7%'], ['3', '11~23%', '12%'], ['4', '23~40%', '17%'], ['5', '40~60%', '20%'], ['6', '60~77%', '17%'], ['7', '77~89%', '12%'], ['8', '89~96%', '7%'], ['9', '96~100%', '4%']].map(function (r) { return '<tr><td style="padding:6px">' + r[0] + '</td><td style="padding:6px">' + r[1] + '</td><td style="padding:6px">' + r[2] + '</td></tr>'; }).join('') +
+      '</tbody></table></div></div></section>';
+    h += '<button type="button" class="btn" data-act="view" data-v="mock" style="align-self:center;min-height:52px;padding:0 24px;font-size:16px">모의 지원으로 내 경로 확인하기 ' + icon(CHEV) + '</button></div>';
+    return h;
+  }
+
+  // ---------- 화면: 모의 지원 ----------
+  function viewMock() {
+    var sp = D.schools.filter(function (s) { return s.group === '전기 특목' && !s.pending; });
+    var vo = D.schools.filter(function (s) { return s.group === '전기 특성화' && !s.pending; });
+    var voSp = vo.filter(function (s) { return s.spCap; }), voGen = vo.filter(function (s) { return s.genCap; });
+    var opts = [{ head: '특수목적학과', fg: '#6B3FA0' }];
+    sp.forEach(function (s) { opts.push({ id: 's:' + s.id, name: s.name + ' ' + s.dept, sub: (s.cap ? s.cap + '명 · ' : '') + (shortWhen(stepsFor(s)[0]) ? '원서 ' + shortWhen(stepsFor(s)[0]) : '') }); });
+    opts.push({ head: '특성화고 · 일반고 직업계열학과', fg: '#0D6B63' });
+    var spStep = function (s, w) { return stepsFor(s).filter(function (t) { return t.label.indexOf(w) >= 0; }); };
+    var anyVo = voSp[0] || vo[0];
+    opts.push({ id: 'vosp', name: '소질적성전형 (특별전형)', sub: voSp.length + '개교 · 학교마다 추천·출결 조건이 달라요' + (anyVo && spStep(anyVo, '소질적성')[0] ? ' · 원서 ' + shortWhen(spStep(anyVo, '소질적성')[0]) : '') });
+    var pend = D.schools.filter(function (s) { return s.group === '전기 특성화' && s.pending; }).map(function (s) { return s.name; });
+    opts.push({ id: 'vogen', name: '일반전형', sub: voGen.length + '개교' + (pend.length ? ' (' + pend.join(', ') + '는 전형 발표 전)' : '') + (anyVo && spStep(anyVo, '일반전형')[0] ? ' · 원서 ' + shortWhen(spStep(anyVo, '일반전형')[0]) : '') });
+    opts.push({ head: '전기 지원 안 함', fg: '#4F5B57' });
+    opts.push({ id: 'none', name: '전기 지원하지 않기', sub: '후기 학교만 지원' });
+    if (!opts.some(function (o) { return o.id === ST.f; })) ST.f = 'vosp';
+
+    var fid = ST.f, isNone = fid === 'none', isVoSp = fid === 'vosp', isVoGen = fid === 'vogen';
+    var curName = '', curSteps = [], pre = [];
+    if (isVoSp || isVoGen) {
+      var list = isVoSp ? voSp : voGen;
+      var vs = list.filter(function (s) { return s.id === ST.vs; })[0] || list[0];
+      ST.vs = vs ? vs.id : '';
+      if (vs) {
+        curName = vs.name + (vs.dept ? ' ' + vs.dept : '') + ' ' + (isVoSp ? '소질적성전형' : '일반전형');
+        curSteps = spStep(vs, isVoSp ? '소질적성' : '일반전형');
+        pre.push(['모집 인원', isVoSp ? vs.spCap : vs.genCap]);
+        if (isVoSp) pre.push(['지원 조건', [vs.rec, vs.att].filter(Boolean).join(' · ')]);
+      }
+    } else if (!isNone) {
+      var s0 = school(fid.slice(2));
+      curName = s0.name + ' ' + s0.dept;
+      curSteps = stepsFor(s0);
+      if (s0.cap) pre.push(['모집 인원', s0.cap + '명']);
+    }
+    var genSchool = voGen.filter(function (s) { return s.id === (ST.gs || ST.vs); })[0] || voGen[0];
+    var genSteps = genSchool ? spStep(genSchool, '일반전형') : [];
+    var genWhen = genSteps[0] ? shortWhen(genSteps[0]) : '';
+    var genResult = genSteps[1] ? shortWhen(genSteps[1]) : '';
+    var eqSteps = D.steps.filter(function (t) { return t.sid === '후기 평준화'; });
+    var neqSteps = D.steps.filter(function (t) { return t.sid === '후기 비평준화'; });
+    var fl = D.schools.filter(function (s) { return s.group === '후기 특목'; })[0];
+    var flSteps = fl ? stepsFor(fl) : [];
+    var backWhen = eqSteps[0] ? shortWhen(eqSteps[0]) : '';
+    var addEv = findEvent('추가모집 원서'), addWhen = addEv ? shortWhen(addEv) : '추가모집 기간';
+    var neqSum = D.schools.filter(function (s) { return s.group === '후기 비평준화'; }).reduce(function (a, s) { return a + (+s.cap || 0); }, 0);
+    var eqTotal = +D.set['평준화 전체 정원'] || 0;
+    // 후기 세부 선택: 평준화 지망, 비평준화 학교, 외고 학과
+    var eqAll = D.schools.filter(function (s) { return s.group === '후기 평준화'; });
+    var neqAvail = D.schools.filter(function (s) { return s.group === '후기 비평준화' && sexOk(s); });
+    var flDepts = fl ? setList('외고 학과', '영어과, 스페인어과, 중국어과, 일본어과') : [];
+    if (flDepts.indexOf(ST.fd) < 0) ST.fd = '';
+    var flTypes = fl && fl.social.length ? ['일반전형', '사회통합전형'] : [];
+    if (flTypes.length && flTypes.indexOf(ST.ft) < 0) ST.ft = '일반전형';
+    var flLabel = fl ? fl.name + (ST.fd ? ' ' + ST.fd : '') + (flTypes.length && ST.ft === '사회통합전형' ? ' 사회통합전형' : '') : '';
+    var ngS = neqAvail.filter(function (s) { return s.id === ST.ng; })[0];
+    if (!ngS) ST.ng = '';
+    var eqAvail = eqAll.filter(sexOk), seenW = {}, wi;
+    for (wi = 0; wi < SLOTS; wi++) {
+      var wv = ST['w' + wi], wsch = school(wv);
+      if (!wsch || wsch.group !== '후기 평준화' || !sexOk(wsch) || seenW[wv]) ST['w' + wi] = ''; else seenW[wv] = 1;
+    }
+    var wOff = ST.b === 'fl' && fl ? 2 : 1, picks = [];
+    for (wi = 0; wi < SLOTS; wi++) if (ST['w' + wi]) picks.push({ n: wi + wOff, s: school(ST['w' + wi]) });
+    var picksText = picks.map(function (p) { return p.n + '지망 ' + p.s.name; }).join(' › ');
+    var BACK = {
+      eq: { name: '평준화 일반고', sub: '제주시 ' + D.schools.filter(function (s) { return s.group === '후기 평준화'; }).length + '개교' + (eqTotal ? ' ' + eqTotal.toLocaleString('ko-KR') + '명' : '') + ' · 1~7지망', steps: eqSteps,
+        notes: ['1지망부터 7지망까지 희망 학교를 순서대로 써요.', '내신 개인석차백분율 100%로 선발한 뒤, 9개 등급별로 전산 추첨해 배정해요.', '배정된 학교 입학을 포기하면 그 해에는 다른 학교에 다시 배정받을 수 없어요.'] },
+      neq: { name: '비평준화 일반고·자공고', sub: D.schools.filter(function (s) { return s.group === '후기 비평준화'; }).length + '개교 ' + neqSum.toLocaleString('ko-KR') + '명 중 1곳', steps: ngS ? stepsFor(ngS) : neqSteps,
+        notes: ['후기 학교는 1곳만 지원할 수 있어요.', '내신 개인석차백분율 100%로 학교장이 선발해요.', '불합격하면 ' + addWhen + ' 추가모집에 지원할 수 있어요.'] },
+      fl: { name: fl ? fl.name : '외국어고', sub: fl ? fl.cap + '명 · ' + (fl.capnote || '') : '', steps: flSteps,
+        notes: ['제주시 평준화 일반고에 2지망부터 동시에 지원할 수 있어요.', '비평준화 일반고·자공고에는 동시에 지원할 수 없어요. (이중지원)', '외고에 불합격하면 평준화 선발 기준을 충족한 경우 2지망부터 추첨 배정돼요.'].concat(fl && fl.social.length ? (ST.ft === '사회통합전형' ? ['사회통합전형은 학과별 5명이에요. 떨어지면 일반전형 지원자와 함께 다시 심사받아요.', '대상과 제출 서류는 학교 찾기의 ' + fl.name + ' 화면에서 확인하세요.'] : ['모집 정원의 20%는 사회통합전형(사회적 배려대상자)으로 선발해요. 대상은 학교 찾기의 ' + fl.name + ' 화면에서 확인하세요.']) : []) }
+    };
+    if (!fl) delete BACK.fl;
+    if (!BACK[ST.b]) ST.b = 'eq';
+
+    var res = ST.r, showGen = isVoSp && res === 'fail', genYes = showGen && ST.gen === 'yes', genPass = genYes && ST.gr === 'pass';
+    var goBack = isNone || (res === 'fail' && !genPass);
+
+    var h = '<div class="page"><div class="title"><h1>모의 지원</h1><p>전기 학교를 골라 보세요. 합격했을 때와 불합격했을 때 할 수 있는 일, 할 수 없는 일을 보여드려요. 실제 원서 접수와는 관계없는 연습이에요.</p></div><div class="row">';
+    h += '<section class="card side" style="padding:18px;display:flex;flex-direction:column;gap:10px" aria-labelledby="s1"><div class="row" style="gap:10px;align-items:center"><span class="badge" style="background:#16201D">1</span><h2 id="s1" style="font-size:17px">전기 학교 고르기</h2></div><p class="small muted">전기 학교는 1곳만 지원할 수 있어요.</p>' +
+      opts.map(function (o) {
+        if (o.head) return '<p style="margin-top:8px;font-size:12px;font-weight:700;color:' + o.fg + '">' + esc(o.head) + '</p>';
+        return '<button type="button" class="opt" data-act="f" data-v="' + esc(o.id) + '" aria-pressed="' + (o.id === fid) + '"><span class="radio"></span><span style="display:flex;flex-direction:column;gap:2px"><b style="font-size:15px">' + esc(o.name) + '</b><span class="muted" style="font-size:12px">' + esc(o.sub) + '</span></span></button>';
+      }).join('') + '</section>';
+
+    h += '<div class="grow" style="display:flex;flex-direction:column;gap:14px"><section class="summary"><p class="small" style="color:#C9D6D2">내가 고른 전기 학교</p><p style="font-size:22px;font-weight:700">' + esc(isNone ? '전기 지원하지 않기' : curName) + '</p><div class="row" style="gap:8px">' +
+      (isNone ? '<span class="t"><span style="color:#C9D6D2">안내</span> <b>바로 후기 학교를 골라요</b></span>' :
+        pre.concat(curSteps.map(function (t) { return [t.label.replace(/^(소질적성|일반전형)\s*/, ''), shortWhen(t) || t.text]; })).map(function (p) { return '<span class="t"><span style="color:#C9D6D2">' + esc(p[0]) + '</span> <b>' + esc(p[1]) + '</b></span>'; }).join('')) + '</div>';
+    if (isVoSp) h += '<ol class="flow" aria-label="소질적성전형 지원 순서"><li><span class="s on">① 소질적성' + (curSteps[0] ? ' ' + shortWhen(curSteps[0]).replace(/\([^)]*\)/g, '') : '') + '</span></li><li aria-hidden="true" style="color:#C9D6D2">→</li><li><span class="s">불합격 시 ② 일반전형 ' + esc(genWhen.replace(/\([^)]*\)/g, '')) + '</span></li><li aria-hidden="true" style="color:#C9D6D2">→</li><li><span class="s">불합격 시 ③ 후기 ' + esc(backWhen.replace(/\([^)]*\)/g, '')) + '</span></li><li aria-hidden="true" style="color:#C9D6D2">→</li><li><span class="s">불합격 시 추가모집 ' + esc(addWhen.replace(/\([^)]*\)/g, '')) + '</span></li></ol>';
+    if (isVoSp || isVoGen) {
+      var lst = isVoSp ? voSp : voGen;
+      h += '<div class="row" style="gap:10px;align-items:center"><label for="vs" class="small" style="color:#C9D6D2">지원할 학교</label><select id="vs" data-change="vs">' + lst.map(function (s) {
+        return '<option value="' + esc(s.id) + '"' + (s.id === ST.vs ? ' selected' : '') + '>' + esc(s.name + (s.dept ? ' ' + s.dept : '') + ' (' + (isVoSp ? s.spCap : s.genCap) + ')') + '</option>';
+      }).join('') + '</select></div>';
+    }
+    h += '</section>';
+
+    if (!isNone) {
+      var passItems = [[1, '등록하기', '학교별 등록 일정에 맞춰 등록해요.'], [0, '후기 학교 지원 불가', '등록하지 않아도 후기 학교에 지원할 수 없어요.'], [0, '추가모집·수시모집 지원 불가', '다른 학교에 내면 이중지원으로 합격이 취소돼요.']];
+      var failItems = isVoSp ?
+        [[1, '특성화고 일반전형 다시 지원', '소질적성전형 불합격자는 전기 학교에 한 번 더 지원할 수 있어요.' + (genWhen ? ' (' + genWhen + ' 접수)' : '')], [1, '후기 학교 지원', backWhen + '에 후기 학교에 지원할 수 있어요.'], [1, '추가모집', '모두 불합격하면 ' + addWhen + ' 추가모집에 지원할 수 있어요.']] :
+        [[1, '후기 학교 지원', backWhen + '에 후기 학교에 지원할 수 있어요.'], [0, '다른 전기 학교 지원 불가', '전기 학교는 1곳만 지원할 수 있어요.'], [1, '추가모집', '후기도 불합격하면 ' + addWhen + ' 추가모집에 지원할 수 있어요.']];
+      var itemHtml = function (x) { return '<div class="row" style="gap:10px;flex-wrap:nowrap;align-items:flex-start">' + (x[0] ? '<span class="ok-ico">' + icon('<path d="m5 12 5 5 9-10"/>', 14).replace('aria-hidden="true"', 'role="img" aria-label="가능"') + '</span>' : '<span class="no-ico">' + icon('<path d="M6 6l12 12M18 6 6 18"/>', 14).replace('aria-hidden="true"', 'role="img" aria-label="불가"') + '</span>') + '<p class="small" style="line-height:1.55"><b>' + esc(x[1]) + '</b> ' + esc(x[2]) + '</p></div>'; };
+      h += '<div class="row" style="gap:14px"><section class="card" style="flex:1 1 260px;border-top:5px solid #0D6B63;padding:18px;display:flex;flex-direction:column;gap:10px"><h3 style="font-size:17px;color:#0D6B63">합격하면</h3>' + passItems.map(itemHtml).join('') + '</section>' +
+        '<section class="card" style="flex:1 1 260px;border-top:5px solid #9A4209;padding:18px;display:flex;flex-direction:column;gap:10px"><h3 style="font-size:17px;color:#9A4209">불합격하면</h3>' + failItems.map(itemHtml).join('') + '</section></div>';
+      h += '<section class="card" style="padding:14px 18px;display:flex;flex-wrap:wrap;align-items:center;gap:12px"><b>전기 결과를 가정해 보세요</b><div class="seg" role="group" aria-label="전기 결과">' +
+        '<button type="button" data-act="r" data-v="pass" aria-pressed="' + (res === 'pass') + '">합격했다면</button><button type="button" data-act="r" data-v="fail" aria-pressed="' + (res === 'fail') + '" style="' + (res === 'fail' ? 'color:#9A4209' : '') + '">불합격했다면</button></div></section>';
+    }
+
+    if (showGen) {
+      h += '<section class="card" style="border:2px solid #0D6B63;padding:18px;display:flex;flex-direction:column;gap:12px" aria-labelledby="sg"><div class="row" style="gap:10px;align-items:center"><span class="badge" style="background:#0D6B63">2</span><h2 id="sg" style="font-size:17px">특성화고 일반전형 다시 지원하기</h2><span class="small muted">' + esc((genWhen ? '원서 ' + genWhen : '') + (genResult ? ' · 발표 ' + genResult : '')) + '</span></div>' +
+        '<p class="small" style="line-height:1.6;background:#E3F1EF;border-radius:12px;padding:12px 14px">소질적성전형에 떨어져도 <b>전기는 아직 끝나지 않았어요.</b> 소질적성 발표 직후 특성화고 일반전형에 한 번 더 지원할 수 있어요. 후기로 가기 전에 먼저 정하세요.</p>' +
+        '<div class="grid3" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px" role="group" aria-label="일반전형 지원 여부">' +
+        '<button type="button" class="choice" data-act="gen" data-v="yes" aria-pressed="' + (ST.gen === 'yes') + '"><b>일반전형에 다시 지원하기</b><span class="muted" style="font-size:12px">' + esc(genWhen ? genWhen + ' 접수 · 내신 100%' : '내신 100%') + '</span></button>' +
+        '<button type="button" class="choice" data-act="gen" data-v="no" aria-pressed="' + (ST.gen === 'no') + '"><b>지원하지 않고 후기로 가기</b><span class="muted" style="font-size:12px">' + esc(backWhen ? backWhen + ' 후기 원서 접수' : '후기 원서 접수') + '</span></button></div>';
+      if (genYes) {
+        h += '<div style="display:flex;flex-direction:column;gap:10px;border-top:1px solid #EDF0EE;padding-top:12px"><div class="row" style="gap:10px;align-items:center"><label for="gs" class="small" style="font-weight:600">일반전형 지원 학교</label><select id="gs" data-change="gs" style="min-height:44px;min-width:260px;border-radius:10px;border:1px solid #C9D2CE;padding:0 12px;font-weight:600;background:#fff">' +
+          voGen.map(function (s) { return '<option value="' + esc(s.id) + '"' + (genSchool && s.id === genSchool.id ? ' selected' : '') + '>' + esc(s.name + (s.dept ? ' ' + s.dept : '') + ' (일반 ' + s.genCap + ')') + '</option>'; }).join('') + '</select></div>' +
+          '<p class="small muted">일반전형은 내신 100%로 선발하고 면접이 없어요. 학과는 지망 순서대로 써요. 소질적성에 지원했던 학교와 달라도 돼요.</p>' +
+          '<div class="row" style="gap:12px;align-items:center"><b class="small">일반전형 결과를 가정해 보세요</b><div class="seg" role="group" aria-label="일반전형 결과"><button type="button" data-act="gr" data-v="pass" aria-pressed="' + (ST.gr === 'pass') + '">합격했다면</button><button type="button" data-act="gr" data-v="fail" aria-pressed="' + (ST.gr === 'fail') + '" style="' + (ST.gr === 'fail' ? 'color:#9A4209' : '') + '">불합격했다면</button></div></div></div>';
+      } else {
+        h += '<p class="small muted">일반전형에 지원하지 않으면 후기 원서 접수로 바로 넘어가요.</p>';
+      }
+      h += '</section>';
+    }
+
+    if (goBack) {
+      var B = BACK[ST.b];
+      h += '<section class="card" style="padding:18px;display:flex;flex-direction:column;gap:12px" aria-labelledby="s3"><div class="row" style="gap:10px;align-items:center"><span class="badge" style="background:#34418F">' + (isNone ? 2 : showGen ? 3 : 2) + '</span><h2 id="s3" style="font-size:17px">후기 학교 고르기</h2><span class="small muted">' + esc(backWhen ? '원서 접수 ' + backWhen : '') + '</span></div>' +
+        '<div class="grid3" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px" role="group" aria-label="후기 학교 종류">' + Object.keys(BACK).map(function (k) {
+          return '<button type="button" class="choice back" data-act="b" data-v="' + k + '" aria-pressed="' + (ST.b === k) + '"><b>' + esc(BACK[k].name) + '</b><span class="muted" style="font-size:12px">' + esc(BACK[k].sub) + '</span></button>';
+        }).join('') + '</div>';
+      var useEq = ST.b === 'eq' || (ST.b === 'fl' && ST.we);
+      if (ST.b === 'fl') {
+        h += '<div class="row" style="gap:10px;align-items:center"><label for="fd" class="small" style="font-weight:700">지원 학과</label><select id="fd" class="fsel" data-change="fd" style="width:auto;min-width:200px"><option value="">학과를 고르세요</option>' +
+          flDepts.map(function (d) { return '<option value="' + esc(d) + '"' + (ST.fd === d ? ' selected' : '') + '>' + esc(d) + '</option>'; }).join('') + '</select>' +
+          (flTypes.length ? '<label for="ft" class="small" style="font-weight:700">지원 전형</label><select id="ft" class="fsel" data-change="ft" style="width:auto;min-width:180px">' +
+            flTypes.map(function (t) { return '<option value="' + esc(t) + '"' + (ST.ft === t ? ' selected' : '') + '>' + esc(t) + '</option>'; }).join('') + '</select>' : '') +
+          (fl.capnote ? '<span class="small muted">' + esc(fl.capnote) + '</span>' : '') + '</div>' +
+          '<label style="min-height:44px;display:flex;align-items:center;gap:10px;font-size:14px;background:#E7EAF7;border-radius:12px;padding:0 14px"><input type="checkbox" data-act="we"' + (ST.we ? ' checked' : '') + ' style="width:20px;height:20px;accent-color:#34418F;margin:0">제주시 평준화 일반고에도 동시에 지원하기 (2지망부터 작성)</label>';
+      }
+      if (ST.b === 'neq' || useEq) {
+        h += '<div class="row" style="gap:10px;align-items:center"><b class="small">성별</b><div class="seg" role="group" aria-label="성별"><button type="button" data-act="sex" data-v="m" aria-pressed="' + (ST.sex === 'm') + '">남학생</button><button type="button" data-act="sex" data-v="f" aria-pressed="' + (ST.sex === 'f') + '">여학생</button></div>' +
+          '<span class="small muted">' + (ST.sex ? '지원할 수 없는 남학교·여학교는 목록에서 뺐어요.' : '고르면 지원할 수 없는 남학교·여학교를 목록에서 빼 드려요.') + '</span></div>';
+      }
+      if (ST.b === 'neq') {
+        h += '<div class="row" style="gap:10px;align-items:center"><label for="ng" class="small" style="font-weight:700">지원할 학교</label><select id="ng" class="fsel" data-change="ng" style="width:auto;min-width:240px"><option value="">학교를 고르세요 (' + neqAvail.length + '곳)</option>' +
+          neqAvail.map(function (s) { return '<option value="' + esc(s.id) + '"' + (s.id === ST.ng ? ' selected' : '') + '>' + esc(fullName(s) + (s.cap ? ' (' + s.cap + '명)' : '')) + '</option>'; }).join('') + '</select></div>';
+        if (ngS) h += '<div class="row" style="gap:10px;align-items:center;justify-content:space-between;background:#E7EAF7;border-radius:12px;padding:10px 14px"><div style="display:flex;flex-direction:column;gap:2px"><b>' + esc(fullName(ngS)) + '</b><span class="small" style="color:#34418F">' + esc([ngS.type, ngS.cap ? '모집 ' + ngS.cap + '명' : '', ngS.capnote].filter(Boolean).join(' · ')) + '</span></div>' +
+          '<button type="button" class="btn line" data-act="schoolGo" data-v="' + esc(ngS.id) + '" style="min-height:40px;padding:0 14px;font-size:14px">학교 정보 보기 ' + icon(CHEV, 14) + '</button></div>';
+      }
+      if (useEq) {
+        h += '<div style="display:flex;flex-direction:column;gap:10px;border-top:1px solid #EDF0EE;padding-top:12px"><div class="row" style="gap:10px;align-items:center;justify-content:space-between"><b>평준화 일반고 지망 순서 <span class="muted" style="font-weight:600">' + picks.length + '/' + SLOTS + '</span></b>' +
+          (picks.length ? '<button type="button" class="btn line" data-act="wclear" style="min-height:36px;padding:0 12px;font-size:13px">지망 모두 지우기</button>' : '') + '</div>' +
+          '<p class="small muted">' + (wOff === 2 ? '1지망은 ' + esc(fl.name) + '로 정해져 있어요. 2지망부터 ' + (SLOTS + 1) + '지망까지 평준화 일반고를 가고 싶은 순서대로 골라요.' : '1지망부터 ' + SLOTS + '지망까지 가고 싶은 순서대로 골라요.') + ' 한 학교는 한 번만 쓸 수 있어요.</p><div class="pick">' +
+          (wOff === 2 ? '<label>1지망<span class="fixed">' + esc(fl.name + (ST.fd ? ' ' + ST.fd : '')) + '</span></label>' : '');
+        for (wi = 0; wi < SLOTS; wi++) {
+          var mine = ST['w' + wi];
+          h += '<label for="w' + wi + '">' + (wi + wOff) + '지망<select id="w' + wi + '" data-change="w' + wi + '"><option value="">선택 안 함</option>' +
+            eqAvail.filter(function (s) { return s.id === mine || !seenW[s.id]; }).map(function (s) { return '<option value="' + esc(s.id) + '"' + (s.id === mine ? ' selected' : '') + '>' + esc(s.name) + '</option>'; }).join('') + '</select></label>';
+        }
+        h += '</div>' + (picks.length === SLOTS ? '<p class="small" style="color:#0D6B63;font-weight:600">' + SLOTS + '개 지망을 모두 골랐어요.</p>' : '') + '</div>';
+      }
+      h += '<ul class="bul" style="background:#F7F9F8;border-radius:12px;padding:14px 16px 14px 34px">' + B.notes.map(function (n) { return '<li>' + esc(n) + '</li>'; }).join('') + '</ul></section>';
+    } else {
+      h += '<section style="background:#FDE8E6;border-radius:18px;padding:18px 20px;display:flex;gap:12px;align-items:flex-start"><span style="color:#B42318;flex-shrink:0">' + icon('<circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><path d="M12 16.5h.01"/>', 24) + '</span><div><p style="font-size:16px;font-weight:700;color:#B42318">후기 학교에는 지원할 수 없어요</p><p class="small" style="margin-top:4px;line-height:1.6">전기 학교에 합격하면 등록하지 않더라도 후기 학교, 추가모집, 수시모집에 지원할 수 없어요. 다른 학교에 원서를 내면 이중지원으로 합격이 취소돼요.</p></div></section>';
+    }
+
+    var TAG = { front: ['#EFE8F7', '#6B3FA0', '전기'], back: ['#E7EAF7', '#34418F', '후기'], ok: ['#E3F1EF', '#0D6B63', '할 일'], stop: ['#FDE8E6', '#B42318', '지원 불가'], opt: ['#FDEBDD', '#9A4209', '선택'], gen: ['#E3F1EF', '#0D6B63', '전기 일반전형'], skip: ['#EDF0EE', '#4F5B57', '지원 안 함'] };
+    var path = [];
+    var add = function (w, t, tone) { path.push([w, t, tone]); };
+    curSteps.forEach(function (t) { add(shortWhen(t) || t.text, curName + ' · ' + t.label, 'front'); });
+    if (!isNone && res === 'pass') { add('합격 후', '학교별 일정에 맞춰 등록', 'ok'); add(backWhen, '후기 원서 접수 (지원할 수 없음)', 'stop'); }
+    else {
+      if (showGen) {
+        if (genYes && genSchool) { genSteps.forEach(function (t) { add(shortWhen(t), genSchool.name + (genSchool.dept ? ' ' + genSchool.dept : '') + ' · ' + t.label, 'gen'); }); }
+        else add(genWhen, '특성화고 일반전형 (지원하지 않음)', 'skip');
+      }
+      if (genPass) { add('합격 후', '학교별 일정에 맞춰 등록', 'ok'); add(backWhen, '후기 원서 접수 (지원할 수 없음)', 'stop'); }
+      else {
+        var bPre = ST.b === 'neq' && ngS ? fullName(ngS) + ' · ' : ST.b === 'fl' && fl ? flLabel + ' · ' : ST.b === 'eq' ? '평준화 일반고 · ' : '';
+        BACK[ST.b].steps.forEach(function (t) { add(shortWhen(t) || t.text, bPre + t.label, 'back'); });
+        if (ST.b === 'eq' && picks.length) add('내 지망', picksText, 'back');
+        if (ST.b === 'fl' && ST.we) {
+          var eqA = eqSteps.filter(function (t) { return t.label.indexOf('배정') >= 0; })[0];
+          add(eqA ? shortWhen(eqA) : '', '외고 불합격 시 평준화 일반고 배정 (2지망부터)', 'back');
+          if (picks.length) add('내 지망', '1지망 ' + fl.name + ' › ' + picksText, 'back');
+        }
+        add(addWhen, '모두 불합격하면 추가모집 지원', 'opt');
+      }
+    }
+    h += '<section class="card pad path" aria-labelledby="path"><h2 id="path" style="font-size:17px;margin-bottom:8px">나의 지원 경로</h2>' + path.map(function (p) {
+      var c = TAG[p[2]];
+      return '<div class="p"><span class="w">' + esc(p[0]) + '</span><span class="ln"><i style="background:' + c[1] + '"></i><b></b></span><div class="c"><span>' + esc(p[1]) + '</span>' + chip(c[2], c[1], c[0]) + '</div></div>';
+    }).join('') + '</section>';
+    h += '<details class="card pad"><summary style="cursor:pointer;font-weight:700;min-height:28px">이중지원이 되는 경우 (합격 취소)</summary><ul class="bul" style="margin-top:12px"><li>한 학교에 합격한 학생이 다른 학교에 지원하는 경우</li><li>불합격이 확정되지 않은 상태에서 다른 학교에 지원하는 경우</li><li>전기 학교에 합격한 학생이 후기 학교에 지원하는 경우</li><li>합격한 학생이 등록 여부와 관계없이 추가모집·수시모집에 지원하는 경우</li><li>제주외고(전국단위 자사고·국제고 포함) 지원자가 비평준화 학교장 전형 고등학교에 동시에 지원하는 경우</li></ul></details>';
+    h += '</div></div></div>';
+    return h;
+  }
+
+  // ---------- 화면: 설명회 안내 ----------
+  function viewEvents() {
+    var KH = { '교육청': ['#9A4209', '#FDEBDD'], '전기 학교': ['#6B3FA0', '#EFE8F7'], '후기 학교': ['#34418F', '#E7EAF7'] };
+    var list = D.sessions.filter(function (x) { return (ST.ek === 'all' || x.host === ST.ek) && (ST.et === 'up' ? x.s >= TODAY : x.s < TODAY); }).sort(byDate);
+    if (ST.et === 'past') list.reverse();
+    var h = '<div class="page"><div class="title"><h1>설명회 안내</h1><p>학교 입학설명회와 교육청 설명회를 모았어요. 일정은 학교 사정에 따라 바뀔 수 있으니 학교 공지도 함께 확인하세요.</p></div>' +
+      '<div class="row" style="justify-content:space-between;align-items:center;gap:12px"><div class="row" style="gap:6px" role="group" aria-label="주최 구분">' +
+      [['all', '전체'], ['교육청', '교육청'], ['전기 학교', '전기 학교'], ['후기 학교', '후기 학교']].map(function (k) { return '<button type="button" class="pill dark" data-act="ek" data-v="' + k[0] + '" aria-pressed="' + (ST.ek === k[0]) + '" style="min-height:40px;padding:0 16px;font-size:14px">' + k[1] + '</button>'; }).join('') +
+      '</div><div class="seg" role="group" aria-label="기간"><button type="button" data-act="et" data-v="up" aria-pressed="' + (ST.et === 'up') + '">다가오는 설명회</button><button type="button" data-act="et" data-v="past" aria-pressed="' + (ST.et === 'past') + '">지난 설명회</button></div></div>';
+    if (!list.length) {
+      h += '<p class="card empty">' + (D.sessions.length ? '조건에 맞는 설명회가 없어요.' : '아직 등록된 설명회가 없어요. 일정이 정해지면 여기에 올라와요.') + '</p>';
+    } else {
+      h += '<ul class="plain sescards">' + list.map(function (x) {
+        var c = KH[x.host] || ['#4F5B57', '#EDF0EE'], p = parse(x.s), sc = x.sid ? school(x.sid) : null;
+        var ev = { s: x.s, e: '', title: x.title, who: x.who };
+        return '<li class="card" style="padding:18px;display:flex;flex-direction:column;gap:12px"><div class="row" style="gap:14px;flex-wrap:nowrap;align-items:flex-start"><div style="width:58px;flex-shrink:0;text-align:center;border-radius:12px;padding:8px 0;background:' + (x.s >= TODAY ? '#E3F1EF' : '#EDF0EE') + '"><p class="muted" style="font-size:12px">' + p.m + '월</p><p style="font-size:20px;font-weight:700">' + p.d + '</p><p class="muted" style="font-size:12px">(' + WD[dow(x.s)] + ')</p></div>' +
+          '<div style="min-width:0;display:flex;flex-direction:column;gap:6px"><div class="row" style="gap:6px">' + chip(x.host || '설명회', c[0], c[1]) + (x.need ? '<span class="chip" style="border:1px solid #DDE3E0">사전 신청</span>' : '') + '</div><p style="font-size:17px;font-weight:700;line-height:1.4">' + esc(x.title) + '</p></div></div>' +
+          '<dl class="dl" style="grid-template-columns:52px 1fr"><dt class="muted" style="font-weight:500">시간</dt><dd>' + esc(x.start + (x.end ? ' ~ ' + x.end : '') || '-') + '</dd><dt class="muted" style="font-weight:500">장소</dt><dd>' + esc(x.place || '-') + '</dd><dt class="muted" style="font-weight:500">대상</dt><dd>' + esc(x.who || '-') + '</dd><dt class="muted" style="font-weight:500">신청</dt><dd>' + esc(x.apply || '-') + '</dd></dl>' +
+          '<div class="row" style="gap:8px;padding-top:4px;border-top:1px solid #EDF0EE">' + (x.s >= TODAY ? '<a class="btn line" href="' + gcal(ev) + '" target="_blank" rel="noopener">내 캘린더에 추가</a>' : '') +
+          (sc ? '<button type="button" class="btn line" data-act="schoolGo" data-v="' + esc(sc.id) + '" style="color:#16201D;border-color:#C9D2CE">학교 정보</button>' : '') + '</div></li>';
+      }).join('') + '</ul>';
+    }
+    h += '</div>';
+    return h;
+  }
+
+  // ---------- 그리기 ----------
+  var RENDER = { calendar: viewCalendar, schools: viewSchools, guide: viewGuide, mock: viewMock, events: viewEvents };
+  function navHtml(bottom) {
+    return VIEWS.map(function (x) {
+      var cur = x.v === ST.view ? ' aria-current="page"' : '';
+      return bottom ? '<button type="button" data-act="view" data-v="' + x.v + '"' + cur + '>' + icon(x.icon, 24).replace('stroke-width="2"', 'stroke-width="1.8"') + '<span>' + x.short + '</span></button>'
+        : '<button type="button" data-act="view" data-v="' + x.v + '"' + cur + '>' + x.label + '</button>';
+    }).join('');
+  }
+  function render(focusId) {
+    if (!D) return;
+    var app = document.getElementById('app');
+    var pos = null, act = document.activeElement;
+    if (focusId && act && act.id === focusId) { try { pos = act.selectionStart; } catch (e) { pos = null; } }
+    app.innerHTML = RENDER[ST.view]() + '<p class="foot">' + esc(D.set['기준 자료'] || '') + '<br>일정과 인원은 학교 사정에 따라 바뀔 수 있어요. 지원 전 학교 공지와 담임 선생님 안내를 꼭 확인하세요.</p>';
+    document.getElementById('topnav').innerHTML = navHtml(false);
+    document.getElementById('bottomnav').innerHTML = navHtml(true);
+    if (focusId) {
+      var el = document.getElementById(focusId);
+      if (el) { el.focus(); try { if (pos != null) el.setSelectionRange(pos, pos); } catch (e) {} }
+    }
+  }
+
+  var ACT = {
+    view: function (v) { ST.view = v; render(); window.scrollTo(0, 0); },
+    calView: function (v) { ST.calView = v; render(); },
+    mstep: function (v) { ST.mi = Math.max(0, Math.min(MONTHS.length - 1, ST.mi + (+v))); render(); },
+    mi: function (v) { ST.mi = +v; render(); },
+    sel: function (v) { ST.sel = v; render(); },
+    off: function (v) { ST.off[v] = !ST.off[v]; render(); },
+    phase: function (v) { ST.phase = v; render(); },
+    school: function (v) { ST.school = v; render(); if (window.innerWidth < 720) { var a = document.querySelector('article'); if (a) a.scrollIntoView(); } },
+    schoolGo: function (v) { ST.school = v; ST.view = 'schools'; render(); window.scrollTo(0, 0); },
+    mockFrom: function (v) {
+      var s = school(v); ST.view = 'mock';
+      if (s && s.group.indexOf('후기') === 0) {
+        ST.f = 'none'; ST.b = s.group === '후기 평준화' ? 'eq' : s.group === '후기 비평준화' ? 'neq' : 'fl';
+        if (ST.b === 'eq') { for (var i = 0; i < SLOTS; i++) ST['w' + i] = ''; ST.w0 = s.id; }
+        if (ST.b === 'neq') ST.ng = s.id;
+      }
+      else if (s && s.group === '전기 특목') ST.f = 's:' + s.id; else { ST.f = s && s.spCap ? 'vosp' : 'vogen'; ST.vs = v; }
+      render(); window.scrollTo(0, 0);
+    },
+    f: function (v) { ST.f = v; ST.vs = ''; render(); },
+    r: function (v) { ST.r = v; render(); },
+    gen: function (v) { ST.gen = v; render(); },
+    gr: function (v) { ST.gr = v; render(); },
+    b: function (v) { ST.b = v; render(); },
+    we: function () { ST.we = !ST.we; render(); },
+    sex: function (v) { ST.sex = ST.sex === v ? '' : v; render(); },
+    wclear: function () { for (var i = 0; i < SLOTS; i++) ST['w' + i] = ''; render(); },
+    ek: function (v) { ST.ek = v; render(); },
+    et: function (v) { ST.et = v; render(); }
+  };
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-act]');
+    if (!t || !ACT[t.getAttribute('data-act')]) return;
+    if (t.tagName === 'INPUT') { ACT[t.getAttribute('data-act')](); return; }
+    ACT[t.getAttribute('data-act')](t.getAttribute('data-v'), t);
+  });
+  document.addEventListener('input', function (e) {
+    var k = e.target.getAttribute && e.target.getAttribute('data-input');
+    if (!k) return;
+    ST[k] = e.target.value;
+    if (k === 'q') render('q');
+    else {
+      var cur = school(ST.school), out = document.getElementById('calcres');
+      if (cur && cur.limit && out) { var r = attCalc(cur); out.textContent = r.text; out.style.background = r.ok ? '#E3F1EF' : '#FDE8E6'; out.style.color = r.ok ? '#0D6B63' : '#B42318'; }
+    }
+  });
+  document.addEventListener('change', function (e) {
+    var k = e.target.getAttribute && e.target.getAttribute('data-change');
+    if (!k) return;
+    ST[k] = e.target.value;
+    render(k);
+  });
+
+  function fail(err) {
+    document.getElementById('app').innerHTML = '<p class="loading">정보를 불러오지 못했어요. 잠시 후 새로고침해 주세요.<br><span class="small">' + esc(err && err.message ? err.message : err) + '</span></p>';
+  }
+  window.__goipInit = init;
+  if (window.google && google.script && google.script.run) {
+    google.script.run.withSuccessHandler(function (json) { try { init(JSON.parse(json)); } catch (e) { fail(e); } }).withFailureHandler(fail).getData();
+  } else if (/^https:\/\//.test(window.GOIP_API || '')) {
+    // 바깥 주소에서 열 때: 로그인 없이 시트 내용을 JSON으로 받아 와요.
+    var api = window.GOIP_API.trim();
+    fetch(api + (api.indexOf('?') >= 0 ? '&' : '?') + 'format=json')
+      .then(function (r) { if (!r.ok) throw new Error('서버 응답 ' + r.status); return r.text(); })
+      .then(function (t) { var d; try { d = JSON.parse(t); } catch (e) { throw new Error('웹앱 주소나 배포 설정을 확인해 주세요.'); } init(d); })
+      .catch(fail);
+  } else if (!window.__goipNoAutoLoad) {
+    fetch('data.json').then(function (r) { return r.json(); }).then(init).catch(fail);
+  }
+})();
+</script>
+</body>
+</html>
