@@ -295,7 +295,7 @@ td{padding:12px 16px;border-bottom:1px solid var(--soft);vertical-align:top}
     if (t.s <= TODAY) return { label: t.label, when: when, tag: end === TODAY ? '오늘 마감' : '진행 중', fg: '#9A4209', dot: '#9A4209', state: 'now' };
     return { label: t.label, when: when, tag: 'D-' + diff(TODAY, t.s), fg: color, dot: color, state: 'future' };
   }
-  function shortWhen(t) { return !t ? '' : (t.e && t.e !== t.s ? md(t.s) + '~' + md(t.e) : md(t.s)); }
+  function shortWhen(t) { return !t || !t.s ? '' : (t.e && t.e !== t.s ? md(t.s) + '~' + md(t.e) : md(t.s)); }
   function setList(key, def) {
     var v = D.set[key];
     return String(v == null || String(v).trim() === '' ? def : v).split(/[,，、\n]/).map(function (x) { return x.trim(); }).filter(Boolean);
