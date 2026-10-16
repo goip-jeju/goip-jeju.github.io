@@ -846,15 +846,16 @@ td{padding:12px 16px;border-bottom:1px solid var(--soft);vertical-align:top}
   window.__goipInit = init;
   if (window.google && google.script && google.script.run) {
     google.script.run.withSuccessHandler(function (json) { try { init(JSON.parse(json)); } catch (e) { fail(e); } }).withFailureHandler(fail).getData();
-  } else if (/^https:\/\//.test(window.GOIP_API || '')) {
+  } else if (/^https:\/\//.test(String(window.GOIP_API || '').trim())) {
     // 바깥 주소에서 열 때: 로그인 없이 시트 내용을 JSON으로 받아 와요.
-    var api = window.GOIP_API.trim();
+    var api = String(window.GOIP_API).trim();
     fetch(api + (api.indexOf('?') >= 0 ? '&' : '?') + 'format=json')
       .then(function (r) { if (!r.ok) throw new Error('서버 응답 ' + r.status); return r.text(); })
       .then(function (t) { var d; try { d = JSON.parse(t); } catch (e) { throw new Error('웹앱 주소나 배포 설정을 확인해 주세요.'); } init(d); })
       .catch(fail);
   } else if (!window.__goipNoAutoLoad) {
-    fetch('data.json').then(function (r) { return r.json(); }).then(init).catch(fail);
+    if (location.hostname.indexOf('github.io') >= 0) { fail(new Error('index.html의 window.GOIP_API 줄에 웹앱 주소(https://…/exec)가 비어 있어요.')); }
+    else fetch('data.json').then(function (r) { return r.json(); }).then(init).catch(fail);
   }
 })();
 </script>
