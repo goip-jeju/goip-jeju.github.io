@@ -11,7 +11,7 @@
 <meta property="og:type" content="website">
 <script>
   // ▼ 바깥 주소(GitHub 등)에 올릴 때만: 따옴표 안에 Apps Script 웹 앱 URL(…/exec로 끝나는 주소)을 넣어요.
-  window.GOIP_API = 'https://script.google.com/macros/s/AKfycbxU8sZuQeqwuEq0LqJbZFU443orMtiQ4qgsQEkhcx-CRd0n9gSTRvpHf1hnOgclTsk3/exec';
+  window.GOIP_API = '';
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -773,7 +773,11 @@ td{padding:12px 16px;border-bottom:1px solid var(--soft);vertical-align:top}
     var app = document.getElementById('app');
     var pos = null, act = document.activeElement;
     if (focusId && act && act.id === focusId) { try { pos = act.selectionStart; } catch (e) { pos = null; } }
-    app.innerHTML = RENDER[ST.view]() + '<p class="foot">' + esc(D.set['기준 자료'] || '') + '<br>일정과 인원은 학교 사정에 따라 바뀔 수 있어요. 지원 전 학교 공지와 담임 선생님 안내를 꼭 확인하세요.</p>';
+    // 화면 맨 아래 글: 설정 탭의 '기준 자료', '하단 안내', '만든 사람' (하단 안내 줄이 있고 비어 있으면 숨김)
+    var maker = String(D.set['만든 사람'] || '').trim();
+    var note = ('하단 안내' in D.set) ? String(D.set['하단 안내']).trim() : '일정과 인원은 학교 사정에 따라 바뀔 수 있어요. 지원 전 학교 공지와 담임 선생님 안내를 꼭 확인하세요.';
+    var foot = [esc(D.set['기준 자료'] || ''), esc(note), maker ? '<b style="color:var(--ink)">' + esc(maker) + '</b>' : ''].filter(Boolean).join('<br>');
+    app.innerHTML = RENDER[ST.view]() + '<p class="foot">' + foot + '</p>';
     document.getElementById('topnav').innerHTML = navHtml(false);
     document.getElementById('bottomnav').innerHTML = navHtml(true);
     if (focusId) {
